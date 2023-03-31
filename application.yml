@@ -1,7 +1,7 @@
-# DataSource Config
-#spring:
-#  datasource:
-#    username: root
-#    password: 123456
-#    url: jdbc:mysql:///mybatis_plus?userUnicode=true&characterEncoding=utf-8
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://45.40.234.195:3306/lseaes?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    username: root
+    password: 123456
