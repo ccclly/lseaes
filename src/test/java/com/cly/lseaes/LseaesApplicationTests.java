@@ -1,7 +1,14 @@
 package com.cly.lseaes;
 
-import com.cly.lseaes.dao.UserMapper;
+import com.cly.lseaes.entity.Course;
+import com.cly.lseaes.entity.Notice;
+import com.cly.lseaes.entity.Problem;
 import com.cly.lseaes.entity.User;
+import com.cly.lseaes.mapper.UserMapper;
+import com.cly.lseaes.service.ICourseService;
+import com.cly.lseaes.service.INoticeService;
+import com.cly.lseaes.service.IProblemService;
+import com.cly.lseaes.service.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,43 +19,65 @@ import java.util.List;
 class LseaesApplicationTests {
 
     @Autowired
+    private IUserService userService;
+    @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private INoticeService noticeService;
+    @Autowired
+    private IProblemService problemService;
+    @Autowired
+    private ICourseService iCourseService;
 
     @Test
-    void contextLoads() {
-        System.out.println("--------selectAll method test-------");
-        //查询全部用户，参数是一个Wrapper，条件构造器，先不使用为null
-        List<User> userList = userMapper.selectList(null);
-        userList.forEach(System.out::println);
+    void userTest() {
+        List<User> list = userService.list();
+        list.forEach(System.out::println);
+    }
+    @Test
+    void userTest1() {
 
+        List<Notice> list = noticeService.list();
+        list.forEach(System.out::println);
     }
 
     @Test
-    public void testInsert() {
+    void userTest2() {
         User user = new User();
-        user.setName("uut");
-
-        int insert = userMapper.insert(user);//如果没有设置id，那么会自动生成id
-        System.out.println(insert);//受影响行数
-        System.out.println(user);//id会自动回填
+        user.setName("forTest3");
+        user.setPassword("12321");
+        userMapper.insert(user);
     }
-    //测试更新
+
     @Test
-    public void testUpdate(){
-        User user = new User();
-        //可以通过条件自动拼接动态SQL
-        user.setId(5);
-        user.setName("id:5,修改过后");
-        //updateById 参数是一个对象！
-        int i = userMapper.updateById(user);
-        System.out.println(i);
+    void userTest3() {
+        List<User> list = userMapper.selectList(null);
+        list.stream().sorted((u1, u2) -> u2.getCreateAt().compareTo(u1.getCreateAt())).limit(4).forEach(System.out::println);
     }
 
-    //测试查询
     @Test
-    public void testSelectById(){
-        User user = userMapper.selectById(1L);
-        System.out.println(user);
+    void proTest() {
+        Problem problem = new Problem();
+        problem.setName("Na、K、Al 粉、电石、金属氢化物不能与水及空气接触，须密闭保存。");
+        problem.setChoiceA("正确");
+        problem.setChoiceAIsTrue(true);
+        problem.setChoiceB("错误");
+        problem.setChoiceBIsTrue(false);
+//        problem.setChoiceC("拨打119向消防队报警");
+//        problem.setChoiceCIsTrue(false);
+//        problem.setChoiceD("离开宿舍时拔下电源插头");
+//        problem.setChoiceDIsTrue(true);
+        problem.setType(2);
+        problem.setAnalysisDesc("略");
+        problemService.save(problem);
     }
 
+    @Test
+    void courseTest() {
+        Course course = new Course();
+        course.setId(1);
+        course.setName("生物实验室安全777");
+        course.setDescription("《生物实验室安全》是涉及生物学研究相关专业的实验室安全知识。本课程通过大量视频资料和案例分析，系统地介绍了生物实验室的安全隐患、安全防范措施以及事故发生时的应急处理措施，旨在提高实验人员的安全防范意识和应急处理能力，有效防范安全事故发生、降低安全事故危害。课程内容主要包括实验室基础安全知识、生物安全、微生物实验安全防控、分子生物学安全防控、化学品安全、废弃物安全等。");
+        iCourseService.saveOrUpdate(course);
+    }
 }
