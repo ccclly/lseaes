@@ -2,12 +2,10 @@ package com.cly.lseaes;
 
 import com.cly.lseaes.entity.Course;
 import com.cly.lseaes.entity.Notice;
-import com.cly.lseaes.entity.Problem;
 import com.cly.lseaes.entity.User;
 import com.cly.lseaes.mapper.UserMapper;
 import com.cly.lseaes.service.ICourseService;
 import com.cly.lseaes.service.INoticeService;
-import com.cly.lseaes.service.IProblemService;
 import com.cly.lseaes.service.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +22,6 @@ class LseaesApplicationTests {
     private UserMapper userMapper;
     @Autowired
     private INoticeService noticeService;
-    @Autowired
-    private IProblemService problemService;
     @Autowired
     private ICourseService iCourseService;
 
@@ -55,22 +51,6 @@ class LseaesApplicationTests {
         list.stream().sorted((u1, u2) -> u2.getCreateAt().compareTo(u1.getCreateAt())).limit(4).forEach(System.out::println);
     }
 
-    @Test
-    void proTest() {
-        Problem problem = new Problem();
-        problem.setName("Na、K、Al 粉、电石、金属氢化物不能与水及空气接触，须密闭保存。");
-        problem.setChoiceA("正确");
-        problem.setChoiceAIsTrue(true);
-        problem.setChoiceB("错误");
-        problem.setChoiceBIsTrue(false);
-//        problem.setChoiceC("拨打119向消防队报警");
-//        problem.setChoiceCIsTrue(false);
-//        problem.setChoiceD("离开宿舍时拔下电源插头");
-//        problem.setChoiceDIsTrue(true);
-        problem.setType(2);
-        problem.setAnalysisDesc("略");
-        problemService.save(problem);
-    }
 
     @Test
     void courseTest() {

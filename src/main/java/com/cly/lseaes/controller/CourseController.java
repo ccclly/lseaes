@@ -1,6 +1,7 @@
 package com.cly.lseaes.controller;
 
 
+import com.cly.lseaes.dto.CourseDTO;
 import com.cly.lseaes.entity.Course;
 import com.cly.lseaes.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -37,12 +40,16 @@ public class CourseController {
     @Autowired
     private ICourseService courseService;
 
-    @PostMapping("/save")
-    public String save(@RequestBody Course course) {
-        courseService.saveOrUpdate(course);
-        return "ok";
-    }
-
+//    @PostMapping("/save")
+//    public String save(@RequestBody CourseDTO courseDTO) {
+//        Course course = new Course();
+//        course.setName(courseDTO.getName());
+//        course.setDescription(courseDTO.getDescription());
+//        course.setImgName(courseDTO.getImgName());
+//        courseService.saveOrUpdate(course);
+//        System.out.println(courseDTO);
+//        return "ok";
+//    }
 
     private static final String UPLOAD_DIR = "uploads";
 
@@ -68,4 +75,20 @@ public class CourseController {
         }
     }
 
+
+    @GetMapping("/list")
+    public List<Course> courseList() {
+        return courseService.list();
+    }
+
+
+
+    @GetMapping("/{id}")
+    public CourseDTO getCourseVOById(@PathVariable Integer id) {
+        System.out.println(id);
+//        List<Object> objects;
+//        objects = Collections.singletonList(courseService.selectCourseDTOById(id));
+//        System.out.println(objects);
+        return courseService.selectCourseDTOById(id);
+    }
 }

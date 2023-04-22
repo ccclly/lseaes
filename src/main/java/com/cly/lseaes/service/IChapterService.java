@@ -1,6 +1,6 @@
 package com.cly.lseaes.service;
 
-import com.cly.lseaes.entity.Problem;
+import com.cly.lseaes.entity.Chapter;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author cly
- * @since 2023-04-18
+ * @since 2023-04-15
  */
-public interface IProblemService extends IService<Problem> {
+public interface IChapterService extends IService<Chapter> {
 
 }

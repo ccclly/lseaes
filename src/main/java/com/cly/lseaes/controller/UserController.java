@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,10 +31,15 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
+    @PostMapping("/list")
+    public List<User> userList() {
+        return userService.list();
+    }
+
     @PostMapping("/save")
-    public String save(@RequestBody User user){
+    public List<User> save(@RequestBody User user){
         userService.save(user);
-        return "ok";
+        return userService.list();
     }
 
     @PostMapping("/update")

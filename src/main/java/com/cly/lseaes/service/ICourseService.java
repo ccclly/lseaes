@@ -1,5 +1,6 @@
 package com.cly.lseaes.service;
 
+import com.cly.lseaes.dto.CourseDTO;
 import com.cly.lseaes.entity.Course;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,4 +14,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface ICourseService extends IService<Course> {
 
+    CourseDTO selectCourseDTOById(Integer id);
 }

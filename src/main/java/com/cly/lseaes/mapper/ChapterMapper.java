@@ -1,6 +1,6 @@
 package com.cly.lseaes.mapper;
 
-import com.cly.lseaes.entity.Problem;
+import com.cly.lseaes.entity.Chapter;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author cly
- * @since 2023-04-18
+ * @since 2023-04-15
  */
-public interface ProblemMapper extends BaseMapper<Problem> {
+public interface ChapterMapper extends BaseMapper<Chapter> {
 
 }
