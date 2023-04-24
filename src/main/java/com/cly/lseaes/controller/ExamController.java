@@ -4,12 +4,11 @@ package com.cly.lseaes.controller;
 import com.cly.lseaes.entity.Exam;
 import com.cly.lseaes.service.IExamService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * <p>
@@ -31,5 +30,9 @@ public class ExamController {
         return "ok";
     }
 
+    @GetMapping("/list")
+    public List<Exam> list(){
+        return examService.list();
+    }
 
 }

@@ -54,8 +54,9 @@ public class CommonController {
     }
 
     @PostMapping("/course_save")
-    public String saveCourse(@RequestBody CourseDTO courseDTO) {
+    public CourseDTO saveCourse(@RequestBody CourseDTO courseDTO) {
         Course course = new Course();
+        System.out.println(courseDTO);
         System.out.println(course);
         course.setName(courseDTO.getName());
         course.setDescription(courseDTO.getDescription());
@@ -80,7 +81,7 @@ public class CommonController {
         lessonService.saveOrUpdateBatch(lessonList);
         System.out.println(lessonList);
 
-        return "ok";
+        return courseService.selectCourseDTOById(course.getId());
     }
 
 }
