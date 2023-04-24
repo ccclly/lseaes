@@ -11,7 +11,7 @@ import java.util.Collections;
 public class MybatisPlusTest {
     public static void main(String[] args) {
         /**                   数据连接  记得改成你的数据库，用户名和密码                */
-        FastAutoGenerator.create("jdbc:mysql://45.40.234.195:3306/lseaes?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true", "root", "123456")
+        FastAutoGenerator.create("jdbc:mysql://localhost:3306/lseaes?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true", "root", "c5971415")
                 .globalConfig(builder -> {
                     builder.author("cly") // 设置作者
                             //.enableSwagger() // 开启 swagger 模式

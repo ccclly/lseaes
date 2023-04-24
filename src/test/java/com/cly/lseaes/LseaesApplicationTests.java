@@ -2,10 +2,12 @@ package com.cly.lseaes;
 
 import com.cly.lseaes.entity.Course;
 import com.cly.lseaes.entity.Notice;
+import com.cly.lseaes.entity.Problem;
 import com.cly.lseaes.entity.User;
 import com.cly.lseaes.mapper.UserMapper;
 import com.cly.lseaes.service.ICourseService;
 import com.cly.lseaes.service.INoticeService;
+import com.cly.lseaes.service.IProblemService;
 import com.cly.lseaes.service.IUserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,8 @@ class LseaesApplicationTests {
     private INoticeService noticeService;
     @Autowired
     private ICourseService iCourseService;
+    @Autowired
+    private IProblemService problemService;
 
     @Test
     void userTest() {
@@ -59,5 +63,11 @@ class LseaesApplicationTests {
         course.setName("生物实验室安全777");
         course.setDescription("《生物实验室安全》是涉及生物学研究相关专业的实验室安全知识。本课程通过大量视频资料和案例分析，系统地介绍了生物实验室的安全隐患、安全防范措施以及事故发生时的应急处理措施，旨在提高实验人员的安全防范意识和应急处理能力，有效防范安全事故发生、降低安全事故危害。课程内容主要包括实验室基础安全知识、生物安全、微生物实验安全防控、分子生物学安全防控、化学品安全、废弃物安全等。");
         iCourseService.saveOrUpdate(course);
+    }
+
+    @Test
+    void proTest() {
+        List<Problem> list = problemService.list();
+        list.forEach(System.out::println);
     }
 }

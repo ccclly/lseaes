@@ -63,7 +63,7 @@ public class UserController {
         resultMap.put("grade", user1.getGrade());
         resultMap.put("college", user1.getCollege());
         resultMap.put("major", user1.getMajor());
-        resultMap.put("user_type", user_type);
+        resultMap.put("user_type", user1.getUserType().toString());
         resultMap.put("token", token);
         return resultMap;
     }

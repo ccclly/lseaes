@@ -1,11 +1,11 @@
 web:
-  uploads-path: /Users/uup/IdeaProjects/lseaes/uploads
+  uploads-path: D:\lseaes\uploads
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://45.40.234.195:3306/lseaes?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/lseaes?serverTimezone=GMT%2B8&useUnicode=true&characterEncoding=utf8&autoReconnect=true&allowMultiQueries=true
     username: root
-    password: 123456
+    password: c5971415
   servlet:
     multipart:
       max-file-size: 500MB
