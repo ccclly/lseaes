@@ -12,27 +12,31 @@ import java.util.List;
 
 /**
  * <p>
- * 前端控制器
+ *  前端控制器
  * </p>
  *
  * @author cly
- * @since 2023-04-10
+ * @since 2023-04-24
  */
 @RestController
 @RequestMapping("/exam")
 public class ExamController {
     @Autowired
-    private IExamService examService;
-
-    @PostMapping("/create")
-    public String create(@RequestBody Exam exam) {
-        examService.save(exam);
-        return "ok";
-    }
+    private IExamService iExamService;
 
     @GetMapping("/list")
-    public List<Exam> list(){
-        return examService.list();
+    public List<Exam> list() {
+        return iExamService.list();
     }
 
+    @PostMapping("/save")
+    public List<Exam> save(@RequestBody Exam exam){
+        iExamService.save(exam);
+        return iExamService.list();
+    }
+
+    @GetMapping("/e/{id}")
+    public List<Exam> getUserExam(@PathVariable Integer id){
+        return iExamService.selectExamByUserId(id);
+    }
 }

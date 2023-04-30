@@ -45,4 +45,9 @@ public class NoticeController {
         return "ok";
     }
 
+    @PostMapping("/update")
+    public List<Notice> update(@RequestBody Notice notice){
+        noticeService.updateById(notice);
+        return noticeService.list();
+    }
 }

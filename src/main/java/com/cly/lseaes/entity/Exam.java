@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author cly
- * @since 2023-04-10
+ * @since 2023-04-24
  */
 public class Exam implements Serializable {
 
@@ -21,16 +21,6 @@ public class Exam implements Serializable {
     private Integer id;
 
     private String name;
-
-    private LocalDateTime start;
-
-    private LocalDateTime end;
-
-    private Integer duration;
-
-    private Integer num;
-
-    private Integer publisherId;
 
     private LocalDateTime createAt;
 
@@ -49,41 +39,6 @@ public class Exam implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-    public LocalDateTime getStart() {
-        return start;
-    }
-
-    public void setStart(LocalDateTime start) {
-        this.start = start;
-    }
-    public LocalDateTime getEnd() {
-        return end;
-    }
-
-    public void setEnd(LocalDateTime end) {
-        this.end = end;
-    }
-    public Integer getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Integer duration) {
-        this.duration = duration;
-    }
-    public Integer getNum() {
-        return num;
-    }
-
-    public void setNum(Integer num) {
-        this.num = num;
-    }
-    public Integer getPublisherId() {
-        return publisherId;
-    }
-
-    public void setPublisherId(Integer publisherId) {
-        this.publisherId = publisherId;
     }
     public LocalDateTime getCreateAt() {
         return createAt;
@@ -105,11 +60,6 @@ public class Exam implements Serializable {
         return "Exam{" +
             "id=" + id +
             ", name=" + name +
-            ", start=" + start +
-            ", end=" + end +
-            ", duration=" + duration +
-            ", num=" + num +
-            ", publisherId=" + publisherId +
             ", createAt=" + createAt +
             ", updateAt=" + updateAt +
         "}";

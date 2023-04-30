@@ -1,6 +1,6 @@
 package com.cly.lseaes.service;
 
-import com.cly.lseaes.entity.ExamSelections;
+import com.cly.lseaes.entity.UserExamOption;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author cly
- * @since 2023-04-03
+ * @since 2023-04-26
  */
-public interface IExamSelectionsService extends IService<ExamSelections> {
+public interface IUserExamOptionService extends IService<UserExamOption> {
 
 }

@@ -2,6 +2,7 @@ package com.cly.lseaes.controller;
 
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.cly.lseaes.dto.UserExamDTO;
 import com.cly.lseaes.entity.User;
 import com.cly.lseaes.service.IUserService;
 import com.cly.lseaes.utils.JwtUtil;
@@ -36,6 +37,11 @@ public class UserController {
         return userService.list();
     }
 
+    @GetMapping("/list_exam/{id}")
+    public List<UserExamDTO> getUserExamDto(@PathVariable Integer id) {
+        return userService.selectUserExamDTOById(id);
+    }
+
     @PostMapping("/save")
     public List<User> save(@RequestBody User user){
         userService.save(user);
@@ -59,6 +65,7 @@ public class UserController {
         token = JwtUtil.getUserToken(userMap);
 
         Map<String, String> resultMap = new HashMap<>();
+        resultMap.put("id", user1.getId().toString());
         resultMap.put("name", user1.getName());
         resultMap.put("grade", user1.getGrade());
         resultMap.put("college", user1.getCollege());

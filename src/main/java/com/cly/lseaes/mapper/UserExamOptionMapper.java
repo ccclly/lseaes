@@ -1,6 +1,6 @@
 package com.cly.lseaes.mapper;
 
-import com.cly.lseaes.entity.ProblemSelections;
+import com.cly.lseaes.entity.UserExamOption;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
@@ -9,8 +9,8 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
  * </p>
  *
  * @author cly
- * @since 2023-04-03
+ * @since 2023-04-26
  */
-public interface ProblemSelectionsMapper extends BaseMapper<ProblemSelections> {
+public interface UserExamOptionMapper extends BaseMapper<UserExamOption> {
 
 }

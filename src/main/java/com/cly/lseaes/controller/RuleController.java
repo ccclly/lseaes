@@ -41,4 +41,10 @@ public class RuleController {
         ruleService.saveOrUpdate(rule);
         return "ok";
     }
+
+    @PostMapping("/update")
+    public List<Rule> update(@RequestBody Rule rule) {
+        ruleService.updateById(rule);
+        return ruleService.list();
+    }
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
  * <p>
@@ -11,23 +12,23 @@ import java.io.Serializable;
  * </p>
  *
  * @author cly
- * @since 2023-04-03
+ * @since 2023-04-24
  */
-@TableName("problem_record_selections")
-public class ProblemRecordSelections implements Serializable {
+@TableName("exam_problem")
+public class ExamProblem implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private Integer userId;
-
     private Integer problemId;
 
-    private String userAns;
-
     private Integer examId;
+
+    private LocalDateTime createAt;
+
+    private LocalDateTime updateAt;
 
     public Integer getId() {
         return id;
@@ -36,26 +37,12 @@ public class ProblemRecordSelections implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    public Integer getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Integer userId) {
-        this.userId = userId;
-    }
     public Integer getProblemId() {
         return problemId;
     }
 
     public void setProblemId(Integer problemId) {
         this.problemId = problemId;
-    }
-    public String getUserAns() {
-        return userAns;
-    }
-
-    public void setUserAns(String userAns) {
-        this.userAns = userAns;
     }
     public Integer getExamId() {
         return examId;
@@ -64,15 +51,29 @@ public class ProblemRecordSelections implements Serializable {
     public void setExamId(Integer examId) {
         this.examId = examId;
     }
+    public LocalDateTime getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(LocalDateTime createAt) {
+        this.createAt = createAt;
+    }
+    public LocalDateTime getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(LocalDateTime updateAt) {
+        this.updateAt = updateAt;
+    }
 
     @Override
     public String toString() {
-        return "ProblemRecordSelections{" +
+        return "ExamProblem{" +
             "id=" + id +
-            ", userId=" + userId +
             ", problemId=" + problemId +
-            ", userAns=" + userAns +
             ", examId=" + examId +
+            ", createAt=" + createAt +
+            ", updateAt=" + updateAt +
         "}";
     }
 }

@@ -1,7 +1,10 @@
 package com.cly.lseaes.service;
 
+import com.cly.lseaes.dto.ProblemExamDTO;
 import com.cly.lseaes.entity.Problem;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,9 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IProblemService extends IService<Problem> {
 
+    List<ProblemExamDTO> selectProblemExamDTOById(Integer id);
+
+    List<Problem> selectProblemByExamId(Integer id);
+
+    List<Problem> getRAND(Integer num);
 }

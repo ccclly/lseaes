@@ -4,6 +4,8 @@ import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.InvalidClaimException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.DecodedJWT;
+import com.cly.lseaes.entity.User;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -25,7 +27,11 @@ public class JwtTokenUserInterceptor implements HandlerInterceptor {
 //            System.out.println(token1);
 
 
-            JwtUtil.verifyUserToken(token);
+            DecodedJWT decodedJWT = JwtUtil.verifyUserToken(token);
+
+            User user = new User();
+            user.setId(Integer.valueOf(decodedJWT.getClaim("id").asString()));
+            request.setAttribute("id", user);
             return true;
         } catch (Exception e){
             throw new RuntimeException(ErrorMessage.USER_NOT_LOGIN);

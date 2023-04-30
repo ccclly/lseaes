@@ -17,12 +17,12 @@ public class MybatisPlusTest {
                             //.enableSwagger() // 开启 swagger 模式
 //                            .fileOverride() // 释放执行就会覆盖已生成文件
                             //鼠标右击蓝色java目录，选择Copy Path... 选择 Absolute Path 即可复制路径，粘贴到下面即可
-                            .outputDir("/Users/uup/IdeaProjects/lseaes/src/main/java"); // 指定输出目录
+                            .outputDir("D:\\lseaes\\src\\main\\java"); // 指定输出目录
                 })
                 .packageConfig(builder -> {
                     builder.parent("com.cly.lseaes") // 设置父包名
 //                            .moduleName("") // 设置父包模块名  需要你就设置
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "/Users/uup/IdeaProjects/lseaes/src/main/resources/mapper")); // 设置mapperXml生成路径
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, "D:\\lseaes\\src\\main\\resources\\mapper")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
 //
@@ -35,13 +35,13 @@ public class MybatisPlusTest {
 //                            .addInclude("lesson")
 //                            .addInclude("exam")
 //                            .addInclude("notice")
-                            .addInclude("problem")
+//                            .addInclude("problem")
 //                            .addInclude("rule")
 //                            .addInclude("user")
-//                            .addInclude("exam_selections")
-//                            .addInclude("problem_selections")
+//                            .addInclude("user_exam")
+//                            .addInclude("exam_problem")
+                            .addInclude("user_exam_option")
 //                            .addInclude("problem_record_selections")
-//                            .addInclude("content")
                     ;
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
