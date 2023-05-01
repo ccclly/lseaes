@@ -11,22 +11,16 @@ import java.time.LocalDateTime;
  * </p>
  *
  * @author cly
- * @since 2023-04-24
+ * @since 2023-04-30
  */
-public class Exam implements Serializable {
+public class Repository implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
-    private String name;
-
-    private Integer totalTime;
-
-    private Integer repository_id;
-
-    private Integer count;
+    private String title;
 
     private LocalDateTime createAt;
 
@@ -39,12 +33,12 @@ public class Exam implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
     public LocalDateTime getCreateAt() {
         return createAt;
@@ -63,38 +57,11 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "Exam{" +
+        return "Repository{" +
             "id=" + id +
-            ", name=" + name +
-            ", totalTime=" + totalTime +
-            ", repository_id=" + repository_id +
-            ", count=" + count +
+            ", title=" + title +
             ", createAt=" + createAt +
             ", updateAt=" + updateAt +
         "}";
-    }
-
-    public Integer getTotalTime() {
-        return totalTime;
-    }
-
-    public void setTotalTime(Integer totalTime) {
-        this.totalTime = totalTime;
-    }
-
-    public Integer getRepository_id() {
-        return repository_id;
-    }
-
-    public void setRepository_id(Integer repository_id) {
-        this.repository_id = repository_id;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
     }
 }

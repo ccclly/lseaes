@@ -7,26 +7,32 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * 
+ * 试题主表
  * </p>
  *
  * @author cly
- * @since 2023-04-24
+ * @since 2023-04-30
  */
-public class Exam implements Serializable {
+public class Question implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
+    /**
+     * 题目ID
+     */
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
 
+    /**
+     * 题目类型
+     */
+    private Integer type;
+
     private String name;
 
-    private Integer totalTime;
+    private String imgName;
 
-    private Integer repository_id;
-
-    private Integer count;
+    private String analysisDesc;
 
     private LocalDateTime createAt;
 
@@ -39,12 +45,33 @@ public class Exam implements Serializable {
     public void setId(Integer id) {
         this.id = id;
     }
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
     public String getName() {
         return name;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+    public String getImgName() {
+        return imgName;
+    }
+
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
+    }
+    public String getAnalysisDesc() {
+        return analysisDesc;
+    }
+
+    public void setAnalysisDesc(String analysisDesc) {
+        this.analysisDesc = analysisDesc;
     }
     public LocalDateTime getCreateAt() {
         return createAt;
@@ -63,38 +90,14 @@ public class Exam implements Serializable {
 
     @Override
     public String toString() {
-        return "Exam{" +
+        return "Question{" +
             "id=" + id +
+            ", type=" + type +
             ", name=" + name +
-            ", totalTime=" + totalTime +
-            ", repository_id=" + repository_id +
-            ", count=" + count +
+            ", imgName=" + imgName +
+            ", analysisDesc=" + analysisDesc +
             ", createAt=" + createAt +
             ", updateAt=" + updateAt +
         "}";
-    }
-
-    public Integer getTotalTime() {
-        return totalTime;
-    }
-
-    public void setTotalTime(Integer totalTime) {
-        this.totalTime = totalTime;
-    }
-
-    public Integer getRepository_id() {
-        return repository_id;
-    }
-
-    public void setRepository_id(Integer repository_id) {
-        this.repository_id = repository_id;
-    }
-
-    public Integer getCount() {
-        return count;
-    }
-
-    public void setCount(Integer count) {
-        this.count = count;
     }
 }

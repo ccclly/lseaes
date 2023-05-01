@@ -37,6 +37,8 @@ class LseaesApplicationTests {
     private IUserExamService userExamService;
     @Autowired
     private UserExamMapper userExamMapper;
+    @Autowired
+    private IExamService examService;
 
     @Test
     void userTest() {
@@ -113,5 +115,11 @@ class LseaesApplicationTests {
 //        System.out.println(problemMapper.getRAND(10));
         List<Map<String, Object>> resultList = problemMapper.selectProblemUserById(1);
         System.out.println(resultList);
+    }
+
+    @Test
+    void examTest(){
+        List<Exam> list = examService.list();
+        System.out.println(list);
     }
 }

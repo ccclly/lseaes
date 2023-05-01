@@ -40,8 +40,17 @@ public class MybatisPlusTest {
 //                            .addInclude("user")
 //                            .addInclude("user_exam")
 //                            .addInclude("exam_problem")
-                            .addInclude("user_exam_option")
-//                            .addInclude("problem_record_selections")
+//                            .addInclude("user_exam_option")
+                            .addInclude("question")
+                            .addInclude("question_answer")
+                            .addInclude("question_repository")
+                            .addInclude("repository")
+                            .addInclude("repository_exam")
+                            .addInclude("paper")
+                            .addInclude("paper_question")
+                            .addInclude("paper_question_answer")
+                            .addInclude("exam_course")
+
                     ;
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
