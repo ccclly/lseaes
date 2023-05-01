@@ -1,5 +1,6 @@
 package com.cly.lseaes.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cly.lseaes.entity.*;
 import com.cly.lseaes.mapper.PaperMapper;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * <p>
@@ -43,7 +41,8 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
     });
 
     @Override
-    public String acreatePaper(Integer userId, Integer examId) {
+    public HashMap<String, Object> acreatePaper(Integer userId, Integer examId) {
+        System.out.println(examId);
         QueryWrapper<Paper> wrapper = new QueryWrapper<>();
         wrapper.lambda()
                 .eq(Paper::getUserId, userId)
@@ -60,17 +59,36 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         Paper paper = this.savePaper(userId, examId, pqList);
 
 
-        return String.valueOf(paper.getId());
+        return getPaperById(paper.getId());
     }
 
 
+    @Override
+    public HashMap<String, Object> getPaperById(Integer paperId) {
+        HashMap<String, Object> result = new HashMap<>();
+        Paper paper = mapper.selectById(paperId);
+        result.put("paper", JSON.toJSON(paper));
+        Exam exam = examService.getById(paper.getExamId());
+        result.put("exam",  JSON.toJSON(exam));
+        List<Question> questionList = questionService.selectQuListByPaperId(paperId);
+        result.put("quList", JSON.toJSON(questionList));
+        List<List<QuestionAnswer>> questionAnswerList = new ArrayList<>();
+        for (Question question : questionList) {
+            QueryWrapper<QuestionAnswer> wrapper = new QueryWrapper<>();
+            wrapper.eq("question_id", question.getId());
+            List<QuestionAnswer> questionAnswers = questionAnswerService.list(wrapper);
+            questionAnswerList.add(questionAnswers);
+        }
+        result.put("quansList", JSON.toJSON(questionAnswerList));
+        return result;
+    }
 
     private List<PaperQuestion> generateByRepo(Integer examId) {
         Exam exam = examService.getById(examId);
         List<PaperQuestion> quList = new ArrayList<>();
 
 
-        int count = exam.getCount(), repo_id = exam.getRepository_id();
+        int count = exam.getCount(), repo_id = exam.getRepositoryId();
         List<Question> questions = questionService.selectQuListByRepoIdAndCount(repo_id, count);
 
         for (Question q :

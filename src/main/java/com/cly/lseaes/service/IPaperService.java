@@ -3,6 +3,8 @@ package com.cly.lseaes.service;
 import com.cly.lseaes.entity.Paper;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.HashMap;
+
 /**
  * <p>
  *  服务类
@@ -13,5 +15,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IPaperService extends IService<Paper> {
 
-    String acreatePaper(Integer userId, Integer examId);
+    HashMap<String, Object> acreatePaper(Integer userId, Integer examId);
+
+    HashMap<String, Object> getPaperById(Integer paperId);
 }

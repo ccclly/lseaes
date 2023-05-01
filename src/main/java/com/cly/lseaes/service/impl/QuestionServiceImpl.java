@@ -26,4 +26,9 @@ public class QuestionServiceImpl extends ServiceImpl<QuestionMapper, Question> i
     public List<Question> selectQuListByRepoIdAndCount(Integer repositoryId, Integer count){
         return mapper.selectQuListByRepoIdAndCount(repositoryId, count);
     }
+
+    @Override
+    public List<Question> selectQuListByPaperId(Integer id){
+        return mapper.selectQuListByPaperId(id);
+    }
 }

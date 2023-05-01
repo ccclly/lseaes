@@ -4,10 +4,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cly.lseaes.dto.UserExamDTO;
 import com.cly.lseaes.entity.*;
-import com.cly.lseaes.mapper.CourseMapper;
-import com.cly.lseaes.mapper.ProblemMapper;
-import com.cly.lseaes.mapper.UserExamMapper;
-import com.cly.lseaes.mapper.UserMapper;
+import com.cly.lseaes.mapper.*;
 import com.cly.lseaes.service.*;
 import com.cly.lseaes.utils.JwtUtil;
 import org.junit.jupiter.api.Test;
@@ -39,6 +36,10 @@ class LseaesApplicationTests {
     private UserExamMapper userExamMapper;
     @Autowired
     private IExamService examService;
+    @Autowired
+    private ExamMapper examMapper;
+    @Autowired
+    private IQuestionService questionService;
 
     @Test
     void userTest() {
@@ -58,10 +59,14 @@ class LseaesApplicationTests {
 //            list.add(userExamDTO);
 //        }
 //        System.out.println(list);;
-        UserExam userExam = new UserExam();
-        userExam.setUserId(2);
-        userExam.setExamId(1);
-        userExamService.deleteUerExam(userExam);
+//        UserExam userExam = new UserExam();
+//        userExam.setUserId(2);
+//        userExam.setExamId(1);
+//        userExamService.deleteUerExam(userExam);
+//        System.out.println(examService.list());
+        List<Question> l = questionService.selectQuListByPaperId(8);
+        System.out.println(l.size());
+
     }
     @Test
     void userTest1() {

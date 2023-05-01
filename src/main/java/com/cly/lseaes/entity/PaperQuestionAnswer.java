@@ -30,7 +30,7 @@ public class PaperQuestionAnswer implements Serializable {
     /**
      * 题目类型
      */
-    private Integer questionType;
+
 
     /**
      * 是否答对
@@ -69,13 +69,6 @@ public class PaperQuestionAnswer implements Serializable {
     public void setAnswerId(Integer answerId) {
         this.answerId = answerId;
     }
-    public Integer getQuestionType() {
-        return questionType;
-    }
-
-    public void setQuestionType(Integer questionType) {
-        this.questionType = questionType;
-    }
     public Boolean getIsRight() {
         return isRight;
     }
@@ -91,7 +84,6 @@ public class PaperQuestionAnswer implements Serializable {
             ", paperId=" + paperId +
             ", questionId=" + questionId +
             ", answerId=" + answerId +
-            ", questionType=" + questionType +
             ", isRight=" + isRight +
         "}";
     }

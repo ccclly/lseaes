@@ -24,7 +24,7 @@ public class Exam implements Serializable {
 
     private Integer totalTime;
 
-    private Integer repository_id;
+    private Integer repositoryId;
 
     private Integer count;
 
@@ -67,7 +67,7 @@ public class Exam implements Serializable {
             "id=" + id +
             ", name=" + name +
             ", totalTime=" + totalTime +
-            ", repository_id=" + repository_id +
+            ", repository_id=" + repositoryId +
             ", count=" + count +
             ", createAt=" + createAt +
             ", updateAt=" + updateAt +
@@ -82,13 +82,7 @@ public class Exam implements Serializable {
         this.totalTime = totalTime;
     }
 
-    public Integer getRepository_id() {
-        return repository_id;
-    }
 
-    public void setRepository_id(Integer repository_id) {
-        this.repository_id = repository_id;
-    }
 
     public Integer getCount() {
         return count;
@@ -96,5 +90,13 @@ public class Exam implements Serializable {
 
     public void setCount(Integer count) {
         this.count = count;
+    }
+
+    public Integer getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(Integer repositoryId) {
+        this.repositoryId = repositoryId;
     }
 }
