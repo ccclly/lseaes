@@ -37,9 +37,13 @@ public class PaperQuestionAnswer implements Serializable {
      */
     private Boolean isRight;
 
+    private Boolean checked;
+
     private Integer sort;
 
     private String abc;
+
+
 
     public Integer getId() {
         return id;
@@ -102,5 +106,14 @@ public class PaperQuestionAnswer implements Serializable {
 
     public void setAbc(String abc) {
         this.abc = abc;
+    }
+
+
+    public Boolean getChecked() {
+        return checked;
+    }
+
+    public void setChecked(Boolean checked) {
+        this.checked = checked;
     }
 }

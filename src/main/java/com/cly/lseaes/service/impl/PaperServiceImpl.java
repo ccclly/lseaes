@@ -73,13 +73,21 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         List<Question> questionList = questionService.selectQuListByPaperId(paperId);
         result.put("quList", JSON.toJSON(questionList));
         List<List<QuestionAnswer>> questionAnswerList = new ArrayList<>();
+        List<List<PaperQuestionAnswer>> paperQAList = new ArrayList<>();
         for (Question question : questionList) {
             QueryWrapper<QuestionAnswer> wrapper = new QueryWrapper<>();
             wrapper.eq("question_id", question.getId());
             List<QuestionAnswer> questionAnswers = questionAnswerService.list(wrapper);
             questionAnswerList.add(questionAnswers);
+
+            QueryWrapper<PaperQuestionAnswer> wrapper1 = new QueryWrapper<>();
+            wrapper1.eq("paper_id", paperId)
+                    .eq("question_id", question.getId());
+            List<PaperQuestionAnswer> paperQuestionAnswers = paperQuestionAnswerService.list(wrapper1);
+            paperQAList.add(paperQuestionAnswers);
         }
         result.put("quansList", JSON.toJSON(questionAnswerList));
+        result.put("paperQAs", JSON.toJSON(paperQAList));
         return result;
     }
 
@@ -108,7 +116,7 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         paper.setUserId(userId);
         paper.setExamId(examId);
         paper.setTotalTime(exam.getTotalTime());
-        paper.setUserScore(0);
+        paper.setUserScore(0.0);
         paper.setName(exam.getName());
         mapper.insert(paper);
         this.savePaperQu(paper.getId(), pqList);
@@ -147,5 +155,58 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
 
         paperQuestionService.saveBatch(batchQuList);
         paperQuestionAnswerService.saveBatch(batchAnswerList);
+    }
+
+    @Override
+    public String fillAns(Integer paperId, Integer questionId, List<Integer> ansId) {
+        boolean right = true;
+        System.out.println(111);
+        System.out.println(paperId);
+        System.out.println(questionId);
+        System.out.println(ansId);
+        QueryWrapper<PaperQuestionAnswer> wrapper = new QueryWrapper<>();
+        wrapper.eq("paper_id", paperId)
+                .eq("question_id", questionId);
+        List<PaperQuestionAnswer> list = paperQuestionAnswerService.list(wrapper);
+        System.out.println(list);
+        for (PaperQuestionAnswer item : list) {
+
+            if (ansId.contains(item.getAnswerId())) {
+                item.setChecked(true);
+                paperQuestionAnswerService.updateById(item);
+            }else {
+                item.setChecked(false);
+                paperQuestionAnswerService.updateById(item);
+            }
+            //有一个对不上就是错的
+            if (item.getIsRight()!=null && !item.getIsRight().equals(item.getChecked())) {
+                right = false;
+            }
+        }
+        PaperQuestion paperQuestion = new PaperQuestion();
+        paperQuestion.setQuestionId(questionId);
+        paperQuestion.setPaperId(paperId);
+        paperQuestion.setIsRight(right);
+        paperQuestion.setAnswered(true);
+
+        paperQuestionService.updateByKey(paperQuestion);
+
+        return "ok";
+    }
+
+    @Override
+    public Double countScore(Integer paperId) {
+        QueryWrapper<PaperQuestion> wrapper = new QueryWrapper<>();
+        wrapper.eq("paper_id", paperId);
+
+        List<PaperQuestion> list = paperQuestionService.list(wrapper);
+        int rightN = 0;
+        for (PaperQuestion p :
+                list) {
+            if (p.getIsRight()) {
+                rightN++;
+            }
+        }
+        return ((double)rightN / (double)list.size());
     }
 }

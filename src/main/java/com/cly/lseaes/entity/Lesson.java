@@ -22,6 +22,8 @@ public class Lesson implements Serializable {
 
     private Integer chapterId;
 
+    private Integer courseId;
+
     private String name;
 
     private Integer orderNum;
@@ -93,5 +95,13 @@ public class Lesson implements Serializable {
             ", createAt=" + createAt +
             ", updateAt=" + updateAt +
         "}";
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
     }
 }

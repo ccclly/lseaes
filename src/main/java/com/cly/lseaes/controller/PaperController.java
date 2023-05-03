@@ -2,12 +2,14 @@ package com.cly.lseaes.controller;
 
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cly.lseaes.dto.PaperAnsDTO;
 import com.cly.lseaes.entity.Paper;
 import com.cly.lseaes.entity.UserExam;
 import com.cly.lseaes.service.IPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
@@ -41,6 +43,21 @@ public class PaperController {
     @GetMapping("/de/{id}")
     public HashMap<String , Object> getPaperDeById(@PathVariable Integer id){
         return iPaperService.getPaperById(id);
+    }
+
+    @PostMapping("/fill-answer")
+    public String fillAnswer(@RequestBody PaperAnsDTO paperAnsDTO) {
+        iPaperService.fillAns(paperAnsDTO.getPaperId(), paperAnsDTO.getQuestionId(), paperAnsDTO.getAnsIds());
+        return "ok";
+    }
+
+    @GetMapping("/submit/{paperId}")
+    public Double submit(@PathVariable Integer paperId) {
+        Paper paper = iPaperService.getById(paperId);
+        paper.setState(0);
+        paper.setUserScore(iPaperService.countScore(paperId));
+        iPaperService.updateById(paper);
+        return iPaperService.countScore(paperId);
     }
 
 }

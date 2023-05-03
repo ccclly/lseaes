@@ -34,7 +34,7 @@ public class Paper implements Serializable {
     /**
      * 用户得分
      */
-    private Integer userScore;
+    private Double userScore;
 
     /**
      * 考试时长
@@ -73,13 +73,7 @@ public class Paper implements Serializable {
     public void setState(Integer state) {
         this.state = state;
     }
-    public Integer getUserScore() {
-        return userScore;
-    }
 
-    public void setUserScore(Integer userScore) {
-        this.userScore = userScore;
-    }
     public Integer getTotalTime() {
         return totalTime;
     }
@@ -122,5 +116,9 @@ public class Paper implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public void setUserScore(Double userScore) {
+        this.userScore = userScore;
     }
 }

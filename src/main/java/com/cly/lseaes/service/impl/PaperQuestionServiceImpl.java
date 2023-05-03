@@ -30,4 +30,15 @@ public class PaperQuestionServiceImpl extends ServiceImpl<PaperQuestionMapper, P
 
         return this.list(wrapper);
     }
+
+    @Override
+    public void updateByKey(PaperQuestion qu) {
+
+        //查询条件
+        QueryWrapper<PaperQuestion> wrapper = new QueryWrapper<>();
+        wrapper.lambda().eq(PaperQuestion::getPaperId, qu.getPaperId())
+                .eq(PaperQuestion::getQuestionId, qu.getQuestionId());
+
+        this.update(qu, wrapper);
+    }
 }

@@ -40,6 +40,10 @@ class LseaesApplicationTests {
     private ExamMapper examMapper;
     @Autowired
     private IQuestionService questionService;
+    @Autowired
+    private IRecodeLessonService recodeLessonService;
+    @Autowired
+    private IPaperService paperService;
 
     @Test
     void userTest() {
@@ -64,8 +68,7 @@ class LseaesApplicationTests {
 //        userExam.setExamId(1);
 //        userExamService.deleteUerExam(userExam);
 //        System.out.println(examService.list());
-        List<Question> l = questionService.selectQuListByPaperId(8);
-        System.out.println(l.size());
+        System.out.println(paperService.countScore(7));
 
     }
     @Test

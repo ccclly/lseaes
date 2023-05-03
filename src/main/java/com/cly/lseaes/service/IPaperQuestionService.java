@@ -16,4 +16,6 @@ import java.util.List;
 public interface IPaperQuestionService extends IService<PaperQuestion> {
 
     List<PaperQuestion> listByPaper(Integer paperId);
+
+    void updateByKey(PaperQuestion qu);
 }

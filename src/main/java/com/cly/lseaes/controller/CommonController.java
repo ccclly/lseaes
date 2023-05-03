@@ -77,6 +77,7 @@ public class CommonController {
         System.out.println(lessonList);
         lessonList.forEach(item -> {
             item.setChapterId(chapterList.get(item.getChapterId()).getId());
+            item.setCourseId(course.getId());
         });
         lessonService.saveOrUpdateBatch(lessonList);
         System.out.println(lessonList);
