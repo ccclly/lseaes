@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -25,11 +26,16 @@ public class RepositoryController {
 
     // Generate CRUD APIs for Repository entity
     // Create
+    @GetMapping("/list")
+    public List<Repository> list() {
+        return iRepositoryService.list();
+    }
+
     @PostMapping("/save")
-    public String createRepository(@RequestBody Repository repository) {
+    public List<Repository> createRepository(@RequestBody Repository repository) {
         // implementation code here
         iRepositoryService.saveOrUpdate(repository);
-        return "ok";
+        return iRepositoryService.list();
     }
 
     // Read
@@ -42,9 +48,11 @@ public class RepositoryController {
     }
 
     // Delete
-    @RequestMapping("/delete")
-    public void deleteRepository() {
+    @PostMapping("/delete")
+    public List<Repository> deleteRepository(@RequestBody Repository repository) {
         // implementation code here
+        iRepositoryService.removeById(repository.getId());
+        return iRepositoryService.list();
     }
     // Read all questions in a specific repository
 

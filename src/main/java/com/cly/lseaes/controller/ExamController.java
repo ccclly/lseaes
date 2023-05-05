@@ -31,7 +31,13 @@ public class ExamController {
 
     @PostMapping("/save")
     public List<Exam> save(@RequestBody Exam exam){
-        iExamService.save(exam);
+        iExamService.saveOrUpdate(exam);
+        return iExamService.list();
+    }
+
+    @PostMapping("/delete/{id}")
+    public List<Exam> delete(@PathVariable Integer id) {
+        iExamService.removeById(id);
         return iExamService.list();
     }
 

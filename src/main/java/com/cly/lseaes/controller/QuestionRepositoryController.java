@@ -2,13 +2,12 @@ package com.cly.lseaes.controller;
 
 
 import com.cly.lseaes.entity.QuestionRepository;
+import com.cly.lseaes.entity.Repository;
 import com.cly.lseaes.service.IQuestionRepositoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 /**
  * <p>
@@ -29,4 +28,5 @@ public class QuestionRepositoryController {
         iQuestionRepositoryService.saveOrUpdate(questionRepository);
         return "ok";
     }
+
 }

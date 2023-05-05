@@ -3,9 +3,11 @@ package com.cly.lseaes.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.cly.lseaes.dto.QuestionRepoDTO;
 import com.cly.lseaes.entity.Question;
 import com.cly.lseaes.entity.QuestionAnswer;
 import com.cly.lseaes.service.IQuestionAnswerService;
+import com.cly.lseaes.service.IQuestionRepositoryService;
 import com.cly.lseaes.service.IQuestionService;
 import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,18 +35,17 @@ public class QuestionController {
 
     // Create (增) endpoint
     @PostMapping("/save")
-    public String createQuestion(@RequestBody Question question) {
+    public List<Question> createQuestion(@RequestBody Question question) {
         // implementation code here// Save or update question
         iQuestionService.saveOrUpdate(question);
-        return "ok";
+        return iQuestionService.list();
     }
-
     // Delete (删) endpoint
     @PostMapping("/delete/{id}")
-    public String deleteQuestion(@PathVariable Integer id) {
+    public List<Question> deleteQuestion(@PathVariable Integer id) {
         // implementation code here// Delete question by id
         iQuestionService.removeById(id);
-        return "ok";
+        return iQuestionService.list();
     }
 
     // Retrieve (查) endpoint

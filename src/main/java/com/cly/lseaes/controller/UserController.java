@@ -44,7 +44,7 @@ public class UserController {
 
     @PostMapping("/save")
     public List<User> save(@RequestBody User user){
-        userService.save(user);
+        userService.saveOrUpdate(user);
         return userService.list();
     }
 
@@ -52,6 +52,12 @@ public class UserController {
     public String update(@RequestBody User user) {
         userService.updateById(user);
         return "ok";
+    }
+
+    @PostMapping("/delete")
+    public List<User> delete(@RequestBody User user) {
+        userService.removeById(user.getId());
+        return userService.list();
     }
 
     @PostMapping("/login")
@@ -76,11 +82,15 @@ public class UserController {
     }
 
     @GetMapping("/test")
-    public String test(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
+    public HashMap<String, String> test(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
         String token = httpServletRequest.getHeader("token");
         DecodedJWT decodedJWT = JwtUtil.verifyUserToken(token);
         String id = decodedJWT.getClaim("id").asString();
         String name = decodedJWT.getClaim("name").asString();
-        return id+name+"token的登录验证，成功";
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("status", "200");
+        hashMap.put("id", id);
+        hashMap.put("name", name);
+        return hashMap;
     }
 }
