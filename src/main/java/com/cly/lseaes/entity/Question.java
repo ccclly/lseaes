@@ -30,6 +30,8 @@ public class Question implements Serializable {
 
     private String name;
 
+    private Integer repositoryId;
+
     private String imgName;
 
     private String analysisDesc;
@@ -99,5 +101,13 @@ public class Question implements Serializable {
             ", createAt=" + createAt +
             ", updateAt=" + updateAt +
         "}";
+    }
+
+    public Integer getRepositoryId() {
+        return repositoryId;
+    }
+
+    public void setRepositoryId(Integer repositoryId) {
+        this.repositoryId = repositoryId;
     }
 }

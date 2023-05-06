@@ -2,6 +2,7 @@ package com.cly.lseaes.mapper;
 
 import com.cly.lseaes.entity.QuestionRepository;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Select;
 
 /**
  * <p>
