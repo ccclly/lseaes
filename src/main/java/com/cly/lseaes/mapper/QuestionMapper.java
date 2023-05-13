@@ -16,9 +16,12 @@ import java.util.List;
  */
 public interface QuestionMapper extends BaseMapper<Question> {
 
-    @Select("select question.* from question left join question_repository qr on question.id = qr.question_id and qr.repository_id = #{repositoryId} ORDER BY RAND() limit #{count};")
+    @Select("select * from question where question.repository_id = #{repositoryId} ORDER BY RAND() limit #{count};")
     List<Question> selectQuListByRepoIdAndCount(Integer repositoryId, Integer count);
 
     @Select("select question.* from question left join paper_question pq on question.id = pq.question_id where pq.paper_id = #{id}")
     List<Question> selectQuListByPaperId(Integer id);
+
+    @Select("select * from question ORDER BY RAND() limit #{num};")
+    List<Question> selectQuListByR(Integer num);
 }

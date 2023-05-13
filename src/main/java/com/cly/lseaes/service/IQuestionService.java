@@ -19,4 +19,6 @@ public interface IQuestionService extends IService<Question> {
     List<Question> selectQuListByRepoIdAndCount(Integer repositoryId, Integer count);
 
     List<Question> selectQuListByPaperId(Integer id);
+
+    List<Question> selectQuListByR(Integer num);
 }

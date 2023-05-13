@@ -41,11 +41,15 @@ public class UserExamOptionController {
     @PostMapping("/save")
     public String save(@RequestBody List<UserExamOption> list, HttpServletRequest httpServletRequest) {
         User user = (User) httpServletRequest.getAttribute("id");
+        System.out.println(list);
+        System.out.println(user);
+
         double rightNum = 0;
         for (UserExamOption item : list) {
             item.setUserId(user.getId());
 
             Problem problem = problemService.getById(item.getProblemId());
+            System.out.println(problem);
             if (
                     problem.getChoiceAIsTrue()==item.getChoiceAIsTrue()&&
                     problem.getChoiceBIsTrue()==item.getChoiceBIsTrue()&&

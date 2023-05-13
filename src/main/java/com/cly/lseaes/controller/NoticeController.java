@@ -40,14 +40,20 @@ public class NoticeController {
     }
 
     @PostMapping("/save")
-    public String saveNotice(@RequestBody Notice notice) {
+    public List<Notice> saveNotice(@RequestBody Notice notice) {
         noticeService.saveOrUpdate(notice);
-        return "ok";
+        return noticeService.list();
     }
 
     @PostMapping("/update")
     public List<Notice> update(@RequestBody Notice notice){
         noticeService.updateById(notice);
+        return noticeService.list();
+    }
+
+    @PostMapping("/delete/{id}")
+    public List<Notice> delete(@PathVariable Integer id) {
+        noticeService.removeById(id);
         return noticeService.list();
     }
 }

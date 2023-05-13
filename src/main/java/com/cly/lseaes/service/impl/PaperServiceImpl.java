@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -34,6 +36,8 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
     private IPaperQuestionService paperQuestionService;
     @Autowired
     private IPaperQuestionAnswerService paperQuestionAnswerService;
+    @Autowired
+    private IUserExamService userExamService;
 
     private static List<String> ABC = Arrays.asList(new String[]{
             "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X"
@@ -46,30 +50,77 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         QueryWrapper<Paper> wrapper = new QueryWrapper<>();
         wrapper.lambda()
                 .eq(Paper::getUserId, userId)
-                .eq(Paper::getState, 1);
+                .eq(Paper::getState, 1)
+                .eq(Paper::getIsTest, 0);
 
         int exists = (int) this.count(wrapper);
-
+        System.out.println(111);
+        System.out.println(exists);
+        System.out.println(111);
+        List<Paper> paperList = this.list(wrapper);
+        System.out.println(paperList);
         if (exists > 0) {
-
+            for (Paper paper : paperList) {
+                LocalDateTime t = paper.getCreateAt();
+                LocalDateTime now = LocalDateTime.now();
+                // 计算时间差
+                Duration duration = Duration.between(t, now);
+                // 判断时间差是否超过考试时间
+                boolean isOver30Minutes = duration.toMinutes() > paper.getTotalTime();
+                if (isOver30Minutes) {
+                    finishPaper(paper.getExamId());
+                } else {
+                    System.out.println("返回的paperId：");
+                    System.out.println(paper.getId());
+                    return getPaperById(paper.getId());
+                }
+            }
         }
 
         List<PaperQuestion> pqList = this.generateByRepo(examId);
 
-        Paper paper = this.savePaper(userId, examId, pqList);
+        Paper paper = this.savePaper(userId, examId, pqList, false);
 
 
         return getPaperById(paper.getId());
     }
 
+    @Override
+    public void finishPaper(Integer paperId) {
+        Double score = this.countScore(paperId);
+        Paper paper = this.getById(paperId);
+        paper.setState(0);
+        paper.setUserScore(score);
+        if (paper.getIsTest()) {
+            this.updateById(paper);
+            return;
+        }
+        UserExam userExam = userExamService.getUserExam(paper.getUserId(), paper.getExamId());
+        if (userExam == null) {
+            UserExam userExam1 = new UserExam();
+            userExam1.setExamId(paper.getExamId());
+            userExam1.setUserId(paper.getUserId());
+            userExam1.setScore(score);
+            userExamService.save(userExam1);
+        } else {
+            if (userExam.getScore() < score) {
+                userExam.setScore(score);
+                userExamService.updateScore(userExam);
+            }
+        }
+        this.updateById(paper);
+    }
 
     @Override
     public HashMap<String, Object> getPaperById(Integer paperId) {
         HashMap<String, Object> result = new HashMap<>();
         Paper paper = mapper.selectById(paperId);
         result.put("paper", JSON.toJSON(paper));
-        Exam exam = examService.getById(paper.getExamId());
-        result.put("exam",  JSON.toJSON(exam));
+        Exam exam = null;
+        if (paper.getExamId()!=null) {
+            exam = examService.getById(paper.getExamId());
+            result.put("exam", JSON.toJSON(exam));
+        }
         List<Question> questionList = questionService.selectQuListByPaperId(paperId);
         result.put("quList", JSON.toJSON(questionList));
         List<List<QuestionAnswer>> questionAnswerList = new ArrayList<>();
@@ -110,14 +161,19 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
         return quList;
     }
 
-    private Paper savePaper(Integer userId, Integer examId, List<PaperQuestion> pqList){
+    private Paper savePaper(Integer userId, Integer examId, List<PaperQuestion> pqList, Boolean isTest){
         Paper paper = new Paper();
-        Exam exam = examService.getById(examId);
+        Exam exam = null;
+        if (examId != null) {
+            exam = examService.getById(examId);
+            paper.setTotalTime(exam.getTotalTime());
+            paper.setName(exam.getName());
+        }else
+            paper.setName("练习");
         paper.setUserId(userId);
         paper.setExamId(examId);
-        paper.setTotalTime(exam.getTotalTime());
         paper.setUserScore(0.0);
-        paper.setName(exam.getName());
+        paper.setIsTest(isTest);
         mapper.insert(paper);
         this.savePaperQu(paper.getId(), pqList);
         return paper;
@@ -208,5 +264,21 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
             }
         }
         return ((double)rightN / (double)list.size());
+    }
+
+    @Override
+    public HashMap<String, Object> createPaperForTest(Integer num, Integer useId) {
+        List<Question> questions = questionService.selectQuListByR(num);
+        List<PaperQuestion> quList = new ArrayList<>();
+        for (Question q :
+                questions) {
+            PaperQuestion paperQuestion = new PaperQuestion();
+            paperQuestion.setQuestionId(q.getId());
+            paperQuestion.setQuestionType(q.getType());
+            quList.add(paperQuestion);
+        }
+        Paper paper = this.savePaper(useId, null, quList, true);
+
+        return getPaperById(paper.getId());
     }
 }

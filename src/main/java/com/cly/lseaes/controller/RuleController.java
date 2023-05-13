@@ -1,6 +1,7 @@
 package com.cly.lseaes.controller;
 
 
+import com.cly.lseaes.entity.Notice;
 import com.cly.lseaes.entity.Rule;
 import com.cly.lseaes.service.IRuleService;
 //import com.cly.lseaes.service.IUserService;
@@ -37,9 +38,15 @@ public class RuleController {
     }
 
     @PostMapping("/save")
-    public String save(@RequestBody Rule rule) {
+    public List<Rule> save(@RequestBody Rule rule) {
         ruleService.saveOrUpdate(rule);
-        return "ok";
+        return ruleService.list();
+    }
+
+    @PostMapping("/delete/{id}")
+    public List<Rule> delete(@PathVariable Integer id) {
+        ruleService.removeById(id);
+        return ruleService.list();
     }
 
     @PostMapping("/update")

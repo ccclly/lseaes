@@ -40,11 +40,21 @@ public class Paper implements Serializable {
      * 考试时长
      */
     private Integer totalTime;
+    private Boolean isTest;
+//    private Boolean test;
+
+
 
     private LocalDateTime createAt;
 
     private LocalDateTime updateAt;
+    public Boolean getIsTest() {
+        return isTest;
+    }
 
+    public void setIsTest(Boolean isTest) {
+        this.isTest = isTest;
+    }
     public Integer getId() {
         return id;
     }
@@ -118,7 +128,21 @@ public class Paper implements Serializable {
         this.name = name;
     }
 
+
+//
+//    public Boolean getTest() {
+//        return test;
+//    }
+//
+//    public void setTest(Boolean test) {
+//        this.test = test;
+//    }
+
     public void setUserScore(Double userScore) {
         this.userScore = userScore;
+    }
+
+    public Double getUserScore() {
+        return userScore;
     }
 }

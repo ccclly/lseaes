@@ -19,6 +19,14 @@ import org.springframework.stereotype.Service;
 public class UserExamServiceImpl extends ServiceImpl<UserExamMapper, UserExam> implements IUserExamService {
 
     @Override
+    public UserExam getUserExam(Integer userId, Integer examId) {
+        QueryWrapper<UserExam> wrapper = new QueryWrapper<>();
+        wrapper.eq("exam_id", examId)
+                .eq("user_id", userId);
+        return baseMapper.selectOne(wrapper);
+    }
+
+    @Override
     public boolean insertUerExam(UserExam userExam){
         QueryWrapper<UserExam> wrapper = new QueryWrapper<>();
         wrapper.eq("exam_id", userExam.getExamId())

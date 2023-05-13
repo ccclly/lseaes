@@ -4,6 +4,7 @@ package com.cly.lseaes.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.cly.lseaes.dto.PaperAnsDTO;
 import com.cly.lseaes.entity.Paper;
+import com.cly.lseaes.entity.User;
 import com.cly.lseaes.entity.UserExam;
 import com.cly.lseaes.service.IPaperService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <p>
@@ -34,6 +36,13 @@ public class PaperController {
         return iPaperService.acreatePaper(userExam.getUserId(), userExam.getExamId());
     }
 
+    @PostMapping("/test/{num}")
+    public HashMap<String, Object> createPaperForTest(@PathVariable Integer num, HttpServletRequest httpServletRequest) {
+        User user = (User) httpServletRequest.getAttribute("id");
+        System.out.println(user);
+        return iPaperService.createPaperForTest(num, user.getId());
+    }
+
     // Read endpoint
     @GetMapping("/{id}")
     public Paper getPaperById(@PathVariable("id") Integer id) {
@@ -41,7 +50,7 @@ public class PaperController {
     }
 
     @GetMapping("/de/{id}")
-    public HashMap<String , Object> getPaperDeById(@PathVariable Integer id){
+    public HashMap<String, Object> getPaperDeById(@PathVariable Integer id) {
         return iPaperService.getPaperById(id);
     }
 
@@ -53,11 +62,19 @@ public class PaperController {
 
     @GetMapping("/submit/{paperId}")
     public Double submit(@PathVariable Integer paperId) {
-        Paper paper = iPaperService.getById(paperId);
-        paper.setState(0);
-        paper.setUserScore(iPaperService.countScore(paperId));
-        iPaperService.updateById(paper);
+        iPaperService.finishPaper(paperId);
         return iPaperService.countScore(paperId);
     }
 
+    @GetMapping("/list")
+    public List<Paper> getPapersById(HttpServletRequest httpServletRequest) {
+        User user = (User) httpServletRequest.getAttribute("id");
+        QueryWrapper<Paper> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", user.getId());
+        List<Paper> list = iPaperService.list(wrapper);
+        System.out.println(
+                list.get(0).getUserScore()
+        );
+        return list;
+    }
 }

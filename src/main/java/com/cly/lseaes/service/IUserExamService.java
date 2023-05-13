@@ -13,6 +13,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IUserExamService extends IService<UserExam> {
 
+    UserExam getUserExam(Integer userId, Integer examId);
+
     boolean insertUerExam(UserExam userExam);
 
     boolean deleteUerExam(UserExam userExam);
