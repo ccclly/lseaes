@@ -50,8 +50,8 @@ public class MybatisPlusTest {
 //                            .addInclude("paper_question")
 //                            .addInclude("paper_question_answer")
 //                            .addInclude("exam_course")
-                            .addInclude("recode_lesson")
-
+//                            .addInclude("recode_lesson")
+                            .addInclude("enter_permit")
                     ;
                 })
                 .templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板
