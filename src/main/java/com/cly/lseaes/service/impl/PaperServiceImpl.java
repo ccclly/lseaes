@@ -67,8 +67,10 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
                 Duration duration = Duration.between(t, now);
                 // 判断时间差是否超过考试时间
                 boolean isOver30Minutes = duration.toMinutes() > paper.getTotalTime();
+                System.out.println(paper.getId());
+                System.out.println(isOver30Minutes);
                 if (isOver30Minutes) {
-                    finishPaper(paper.getExamId());
+                    finishPaper(paper.getId());
                 } else {
                     System.out.println("返回的paperId：");
                     System.out.println(paper.getId());
@@ -108,6 +110,7 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
                 userExamService.updateScore(userExam);
             }
         }
+        System.out.println("更新paper");
         this.updateById(paper);
     }
 
@@ -268,6 +271,23 @@ public class PaperServiceImpl extends ServiceImpl<PaperMapper, Paper> implements
 
     @Override
     public HashMap<String, Object> createPaperForTest(Integer num, Integer useId) {
+        QueryWrapper<Paper> wrapper = new QueryWrapper<>();
+        wrapper.lambda()
+                .eq(Paper::getUserId, useId)
+                .eq(Paper::getState, 1)
+                .eq(Paper::getIsTest, 1);
+
+        int exists = (int) this.count(wrapper);
+        System.out.println(111);
+        System.out.println(exists);
+        System.out.println(111);
+        List<Paper> paperList = this.list(wrapper);
+        System.out.println(paperList);
+        if (exists > 0) {
+            for (Paper paper : paperList) {
+                return getPaperById(paper.getId());
+            }
+        }
         List<Question> questions = questionService.selectQuListByR(num);
         List<PaperQuestion> quList = new ArrayList<>();
         for (Question q :

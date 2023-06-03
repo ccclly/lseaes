@@ -44,7 +44,7 @@ public class CommonController {
                 .collect(Collectors.toList());
         List<Course> latestCourses = courseService.list().stream()
                 .sorted((n1, n2) -> n2.getCreateAt().compareTo(n1.getCreateAt()))
-                .limit(6)
+                .limit(4)
                 .collect(Collectors.toList());
 
         resultMap.put("notices", latestNotices.stream().map(n -> (Object) n).collect(Collectors.toList()));

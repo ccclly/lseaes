@@ -2,6 +2,7 @@ package com.cly.lseaes.service.impl;
 
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cly.lseaes.constant.ErrorMessage;
+import com.cly.lseaes.dto.UserEnterDTO;
 import com.cly.lseaes.dto.UserExamDTO;
 import com.cly.lseaes.entity.User;
 import com.cly.lseaes.mapper.UserMapper;
@@ -28,6 +29,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
 
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    EnterPermitServiceImpl enterPermitService;
     @Override
     public User login(String username, String password) {
         User user = this.getOne(Wrappers.<User>lambdaQuery().eq(User::getName, username));
@@ -38,6 +41,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements IU
         }
 
         return user;
+    }
+
+    @Override
+    public List<UserEnterDTO> userListAndEnterPermit() {
+        List<UserEnterDTO> result = new ArrayList<>();
+        List<User> user =this.list();
+        for (User item :
+                user) {
+            UserEnterDTO userEnterDTO = new UserEnterDTO();
+            userEnterDTO.setId(item.getId());
+            userEnterDTO.setName(item.getName());
+            userEnterDTO.setUserType(item.getUserType());
+            userEnterDTO.setCollege(item.getCollege());
+            userEnterDTO.setGrade(item.getGrade());
+            userEnterDTO.setMajor(item.getMajor());
+            userEnterDTO.setPassword(item.getPassword());
+            userEnterDTO.setEnterDTOList(enterPermitService.getByUser(item.getId()));
+            result.add(userEnterDTO);
+        }
+        return result;
     }
 
     @Override

@@ -72,9 +72,6 @@ public class PaperController {
         QueryWrapper<Paper> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", user.getId());
         List<Paper> list = iPaperService.list(wrapper);
-        System.out.println(
-                list.get(0).getUserScore()
-        );
         return list;
     }
 }

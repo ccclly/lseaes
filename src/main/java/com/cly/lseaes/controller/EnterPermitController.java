@@ -57,19 +57,6 @@ public class EnterPermitController {
     @GetMapping("/list-user")
     public List<EnterDTO> getByUser(HttpServletRequest httpServletRequest) {
         User user = (User) httpServletRequest.getAttribute("id");
-        List<EnterPermit> list = iEnterPermitService.list();
-        List<EnterDTO> req = new ArrayList<>();
-        for (EnterPermit enterPermit : list) {
-            EnterDTO enterDTO = new EnterDTO();
-            enterDTO.setEnterPermit(enterPermit);
-            enterDTO.setExam(examService.getById(enterPermit.getExamId()));
-            enterDTO.setCourse(courseService.getById(enterPermit.getCourseId()));
-            UserExam userExam = userExamService.getUserExam(user.getId(), enterPermit.getExamId());
-            enterDTO.setExamPass(userExam != null && userExam.getScore()*100.0 >= enterPermit.getExamScore());
-            Integer courseScore = recodeLessonService.getProcessForCourse(enterPermit.getCourseId(), user.getId());
-            enterDTO.setCoursePass(courseScore >= enterPermit.getCourseScore());
-            req.add(enterDTO);
-        }
-        return req;
+        return iEnterPermitService.getByUser(user.getId());
     }
 }

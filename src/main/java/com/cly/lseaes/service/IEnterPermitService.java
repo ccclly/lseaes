@@ -1,7 +1,10 @@
 package com.cly.lseaes.service;
 
+import com.cly.lseaes.dto.EnterDTO;
 import com.cly.lseaes.entity.EnterPermit;
 import com.baomidou.mybatisplus.extension.service.IService;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +16,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
  */
 public interface IEnterPermitService extends IService<EnterPermit> {
 
+    List<EnterDTO> getByUser(Integer userId);
 }

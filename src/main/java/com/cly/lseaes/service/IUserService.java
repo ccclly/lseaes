@@ -1,5 +1,6 @@
 package com.cly.lseaes.service;
 
+import com.cly.lseaes.dto.UserEnterDTO;
 import com.cly.lseaes.dto.UserExamDTO;
 import com.cly.lseaes.entity.User;
 import com.baomidou.mybatisplus.extension.service.IService;
@@ -16,6 +17,8 @@ import java.util.List;
  */
 public interface IUserService extends IService<User> {
     User login(String username, String password);
+
+    List<UserEnterDTO> userListAndEnterPermit();
 
     List<UserExamDTO> selectUserExamDTOById(Integer id);
 }

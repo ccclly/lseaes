@@ -2,8 +2,10 @@ package com.cly.lseaes.controller;
 
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.cly.lseaes.dto.UserEnterDTO;
 import com.cly.lseaes.dto.UserExamDTO;
 import com.cly.lseaes.entity.User;
+import com.cly.lseaes.service.IEnterPermitService;
 import com.cly.lseaes.service.IUserService;
 import com.cly.lseaes.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,10 +34,17 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private IEnterPermitService enterPermitService;
 
     @PostMapping("/list")
     public List<User> userList() {
         return userService.list();
+    }
+
+    @PostMapping("/list_and_enter_permit")
+    public List<UserEnterDTO> userListAndEnterPermit() {
+        return userService.userListAndEnterPermit();
     }
 
     @GetMapping("/list_exam/{id}")
@@ -43,16 +53,11 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public List<User> save(@RequestBody User user){
+    public List<UserEnterDTO> save(@RequestBody User user){
         userService.saveOrUpdate(user);
-        return userService.list();
+        return userService.userListAndEnterPermit();
     }
 
-    @PostMapping("/update")
-    public String update(@RequestBody User user) {
-        userService.updateById(user);
-        return "ok";
-    }
 
     @PostMapping("/delete")
     public List<User> delete(@RequestBody User user) {

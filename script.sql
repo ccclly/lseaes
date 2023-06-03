@@ -51,19 +51,19 @@ create table exam
     update_at     timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP
 );
 
-create table exam_course
-(
-    id        int auto_increment
-        primary key,
-    exam_id   int not null,
-    course_id int not null
-);
-
-create index course_id
-    on exam_course (course_id);
-
-create index exam_id
-    on exam_course (exam_id);
+# create table exam_course
+# (
+#     id        int auto_increment
+#         primary key,
+#     exam_id   int not null,
+#     course_id int not null
+# );
+#
+# create index course_id
+#     on exam_course (course_id);
+#
+# create index exam_id
+#     on exam_course (exam_id);
 
 create table lesson
 (
@@ -154,47 +154,47 @@ create index paper_id
 create index question_id
     on paper_question_answer (question_id);
 
-create table problem
-(
-    id               int auto_increment
-        primary key,
-    name             varchar(300)                        not null,
-    type             int                                 null,
-    choice_a         varchar(300)                        null,
-    choice_a_is_true tinyint(1)                          null,
-    choice_b         varchar(300)                        null,
-    choice_b_is_true tinyint(1)                          null,
-    choice_c         varchar(300)                        null,
-    choice_c_is_true tinyint(1)                          null,
-    choice_d         varchar(300)                        null,
-    choice_d_is_true tinyint(1)                          null,
-    analysis_desc    varchar(500)                        null,
-    appear_count     int                                 null,
-    right_ans_count  int                                 null,
-    author_id        int                                 null,
-    create_at        timestamp default CURRENT_TIMESTAMP null,
-    update_at        timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP
-);
+# create table problem
+# (
+#     id               int auto_increment
+#         primary key,
+#     name             varchar(300)                        not null,
+#     type             int                                 null,
+#     choice_a         varchar(300)                        null,
+#     choice_a_is_true tinyint(1)                          null,
+#     choice_b         varchar(300)                        null,
+#     choice_b_is_true tinyint(1)                          null,
+#     choice_c         varchar(300)                        null,
+#     choice_c_is_true tinyint(1)                          null,
+#     choice_d         varchar(300)                        null,
+#     choice_d_is_true tinyint(1)                          null,
+#     analysis_desc    varchar(500)                        null,
+#     appear_count     int                                 null,
+#     right_ans_count  int                                 null,
+#     author_id        int                                 null,
+#     create_at        timestamp default CURRENT_TIMESTAMP null,
+#     update_at        timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP
+# );
 
-create table exam_problem
-(
-    id         int auto_increment
-        primary key,
-    problem_id int                                 not null,
-    exam_id    int                                 not null,
-    create_at  timestamp default CURRENT_TIMESTAMP null,
-    update_at  timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP,
-    constraint exam_problem_ibfk_1
-        foreign key (problem_id) references problem (id),
-    constraint exam_problem_ibfk_2
-        foreign key (exam_id) references exam (id)
-);
-
-create index exam_id
-    on exam_problem (exam_id);
-
-create index problem_id
-    on exam_problem (problem_id);
+# create table exam_problem
+# (
+#     id         int auto_increment
+#         primary key,
+#     problem_id int                                 not null,
+#     exam_id    int                                 not null,
+#     create_at  timestamp default CURRENT_TIMESTAMP null,
+#     update_at  timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP,
+#     constraint exam_problem_ibfk_1
+#         foreign key (problem_id) references problem (id),
+#     constraint exam_problem_ibfk_2
+#         foreign key (exam_id) references exam (id)
+# );
+#
+# create index exam_id
+#     on exam_problem (exam_id);
+#
+# create index problem_id
+#     on exam_problem (problem_id);
 
 create table question
 (
@@ -221,20 +221,20 @@ create table question_answer
 )
     comment '试题答案选项';
 
-create table question_repository
-(
-    id            int auto_increment
-        primary key,
-    question_id   int not null,
-    repository_id int not null
-)
-    comment '试题题库关联';
-
-create index question_id
-    on question_repository (question_id);
-
-create index repository_id
-    on question_repository (repository_id);
+# create table question_repository
+# (
+#     id            int auto_increment
+#         primary key,
+#     question_id   int not null,
+#     repository_id int not null
+# )
+#     comment '试题题库关联';
+#
+# create index question_id
+#     on question_repository (question_id);
+#
+# create index repository_id
+#     on question_repository (repository_id);
 
 create table recode_lesson
 (
@@ -264,19 +264,19 @@ create table repository
     update_at timestamp default CURRENT_TIMESTAMP null on update CURRENT_TIMESTAMP
 );
 
-create table repository_exam
-(
-    id            int auto_increment
-        primary key,
-    exam_id       int not null,
-    repository_id int not null
-);
+# create table repository_exam
+# (
+#     id            int auto_increment
+#         primary key,
+#     exam_id       int not null,
+#     repository_id int not null
+# );
 
-create index exam_id
-    on repository_exam (exam_id);
-
-create index repository_id
-    on repository_exam (repository_id);
+# create index exam_id
+#     on repository_exam (exam_id);
+#
+# create index repository_id
+#     on repository_exam (repository_id);
 
 create table rule
 (
@@ -323,32 +323,31 @@ create index exam_id
 create index user_id
     on user_exam (user_id);
 
-create table user_exam_option
-(
-    id               int auto_increment
-        primary key,
-    user_id          int        null,
-    exam_id          int        null,
-    problem_id       int        null,
-    choice_a_is_true tinyint(1) null,
-    choice_b_is_true tinyint(1) null,
-    choice_c_is_true tinyint(1) null,
-    choice_d_is_true tinyint(1) null,
-    constraint user_exam_option_ibfk_1
-        foreign key (user_id) references user (id),
-    constraint user_exam_option_ibfk_2
-        foreign key (exam_id) references exam (id),
-    constraint user_exam_option_ibfk_3
-        foreign key (problem_id) references problem (id)
-);
+# create table user_exam_option
+# (
+#     id               int auto_increment
+#         primary key,
+#     user_id          int        null,
+#     exam_id          int        null,
+#     problem_id       int        null,
+#     choice_a_is_true tinyint(1) null,
+#     choice_b_is_true tinyint(1) null,
+#     choice_c_is_true tinyint(1) null,
+#     choice_d_is_true tinyint(1) null,
+#     constraint user_exam_option_ibfk_1
+#         foreign key (user_id) references user (id),
+#     constraint user_exam_option_ibfk_2
+#         foreign key (exam_id) references exam (id),
+#     constraint user_exam_option_ibfk_3
+#         foreign key (problem_id) references problem (id)
+# );
 
-create index exam_id
-    on user_exam_option (exam_id);
-
-create index problem_id
-    on user_exam_option (problem_id);
-
-create index user_id
-    on user_exam_option (user_id);
-
+# create index exam_id
+#     on user_exam_option (exam_id);
+#
+# create index problem_id
+#     on user_exam_option (problem_id);
+#
+# create index user_id
+#     on user_exam_option (user_id);
 

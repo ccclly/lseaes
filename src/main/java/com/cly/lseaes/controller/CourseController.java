@@ -3,6 +3,7 @@ package com.cly.lseaes.controller;
 
 import com.cly.lseaes.dto.CourseDTO;
 import com.cly.lseaes.entity.Course;
+import com.cly.lseaes.entity.User;
 import com.cly.lseaes.service.ICourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -91,4 +92,11 @@ public class CourseController {
 //        System.out.println(objects);
         return courseService.selectCourseDTOById(id);
     }
+
+    @PostMapping("/delete/{id}")
+    public List<Course> delete(@PathVariable Integer id) {
+        courseService.removeById(id);
+        return courseService.list();
+    }
+
 }
